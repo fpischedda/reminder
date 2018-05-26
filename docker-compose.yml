@@ -1,0 +1,6 @@
+gameserver:
+        image: clojure:lein-alpine
+mongodb:
+        image: mongo
+        ports:
+                - "27017:27017"
