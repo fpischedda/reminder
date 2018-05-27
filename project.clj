@@ -5,9 +5,9 @@
             :url "https://www.gnu.org/licenses/agpl-3.0.en.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [http-kit "2.2.0"]
-                 [yogthos/config "0.9"]
-                 [mount "0.1.11"]
-                 [compojure "1.6.0"]
+                 [yogthos/config "1.1.1"]
+                 [mount "0.1.12"]
+                 [compojure "1.6.1"]
                  [ring "1.6.3"]
                  [ring/ring-defaults "0.3.1"]
                  [ring/ring-json "0.4.0"]
