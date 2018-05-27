@@ -1,7 +1,7 @@
 # reminder
 
-Periodically send reminders to friends/collegues until they decide it is time
-to help you with wathever you requested them...or until you lose their
+Periodically send reminders to friends/collegaues until they decide it is time
+to help you with whatever you requested them...or until you lose their
 friendship...
 
 ## Installation
