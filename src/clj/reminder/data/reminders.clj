@@ -4,17 +4,18 @@
             [reminder.data.connection :refer [database]]
             [reminder.data.utils :refer [gen-id]]))
 
-(defn create [inviting-user invited-user game-id]
-  (mc/insert-and-return database "invites" {:_id (gen-id)
-                                            :inviting inviting-user
-                                            :invited invited-user
-                                            :game-id game-id
+(defn create [sender message recipients]
+  (mc/insert-and-return database "reminders" {:_id (gen-id)
+                                            :sender
+                                            :recipients
+                                            :message message
+                                            :comments []
                                             :status :created}))
 
-(defn update-status [invite-id status]
-  (mc/update-by-id database "invites" invite-id {$set {:status status}}))
+(defn update-status [reminder-id status]
+  (mc/update-by-id database "reminders" reminder-id {$set {:status status}}))
 
-(defn accept [invite-id]
+(defn add-comment [reminder-id commentator]
   (update-status invite-id :accepted))
 
 (defn decline [invite-id]

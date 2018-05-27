@@ -1,12 +1,12 @@
-# mazeboard
+# reminder
 
-Clojure implementation of the mazeboard game (previously implemented in common lisp, maybe I'll share that one too in the future :) )
-
-"Mazeboard" is a board game; I'll add a description of the mechanics, I promise!
+Periodically send reminders to friends/collegues until they decide it is time
+to help you with wathever you requested them...or until you lose their
+friendship...
 
 ## Installation
 
-Download from https://github.com/fpischedda/mazeboard
+Download from https://github.com/fpischedda/reminder
 
 ## Build
 
@@ -18,13 +18,8 @@ Download from https://github.com/fpischedda/mazeboard
 
     $ lein midje :all
 
-## Usage
-
-    $ java -jar mazeboard-0.1.0-standalone.jar [args]
-
 ## License
 
-Copyright © 2015 Francesco Pischedda
+Copyright © 2018 Francesco Pischedda
 
 Distributed under the AGLP 3 License
-# mazeboard-clj

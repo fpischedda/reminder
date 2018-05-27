@@ -1,7 +1,7 @@
-(ns mazeboard.api.invites
+(ns reminder.api.reminders
   (:require
-   [mazeboard.data.invites :as invites]
-   [mazeboard.api.utils :refer [success]]))
+   [reminder.data.reminders :as reminders]
+   [reminder.api.utils :refer [success]]))
 
 (defn received-by-user [req]
   (success "[]"))
@@ -10,8 +10,8 @@
   (success "[]"))
 
 (defn create [req]
-  (let [invitation (invites/create "usera" "userb")]
-    (success invitation)))
+  (let [reminder (reminders/create "usera" "userb")]
+    (success reminder)))
 
 (defn details [req]
   (success "[]"))
