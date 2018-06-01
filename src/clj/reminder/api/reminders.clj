@@ -1,8 +1,12 @@
 (ns reminder.api.reminders
   (:require
-   [reminder.data.reminders :as reminders]
+   [reminder.commands.reminders :as commands]
+   [reminder.commands.dispatcher :as dispatcher]
+   [reminder.commands.handlers.reminders :as handlers]
    [reminder.api.utils :refer [success]]))
 
+(def reminder-dispatcher (dispatcher/create {:reminder-create 'handlers/create
+                                             :reminder-close 'handlers/close}))
 (defn received-by-user [req]
   (success "[]"))
 
@@ -10,8 +14,10 @@
   (success "[]"))
 
 (defn create [req]
-  (let [reminder (reminders/create "usera" "userb")]
-    (success reminder)))
+  (let [result (commands/create "usera" "reminder!" [])]
+    (if (= :created (:result result))
+      (success :created)
+      (success (:error result)))))
 
 (defn details [req]
   (success "[]"))

@@ -20,5 +20,5 @@
              :handler any-access
              :request-method :options}
             {:pattern #"^/.*"
-             :handler authenticated-user}
+             :handler any-access}
             ])

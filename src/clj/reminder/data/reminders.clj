@@ -1,20 +1,23 @@
 (ns reminder.data.reminders
-  (:require [java-time :as j]
-            [monger.collection :as mc]
+  (:require [monger.collection :as mc]
             [monger.operators :refer :all]
-            [reminder.data.connection :refer [database]]
-            [reminder.data.utils :refer [gen-id]]))
+            [reminder.data.connection :refer [database]]))
 
-(defn create [reminder]
-  (mc/insert-and-return database "reminders" reminder))
+(defn create [reminder-id sender recipients message created]
+  (mc/insert-and-return database "reminders" {:_id reminder-id
+                                              :sender sender
+                                              :recipients recipients
+                                              :message message
+                                              :created created
+                                              :status :created}))
 
 (defn update-status [reminder-id status]
   (mc/update-by-id database "reminders" reminder-id {$set {:status status}}))
 
-(defn add-comment [reminder-id message commentator]
+(defn add-comment [reminder-id message commentator created]
   (let [comment {:message message
                  :commentator commentator
-                 :created (utc-now)}]
+                 :created created}]
     (mc/update-by-id database "reminders" reminder-id
                      {$push {:comments comment}})))
 
