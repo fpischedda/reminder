@@ -4,7 +4,7 @@
   :license {:name "AGPL V3 License"
             :url "https://www.gnu.org/licenses/agpl-3.0.en.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [http-kit "2.2.0"]
+                 [http-kit "2.3.0"]
                  [yogthos/config "1.1.1"]
                  [mount "0.1.12"]
                  [compojure "1.6.1"]
