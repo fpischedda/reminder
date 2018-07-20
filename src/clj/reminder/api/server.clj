@@ -20,11 +20,14 @@
 
 (def access-options {:rules rules})
 
-(defn wrap-default-headers
-  [handler]
+(defn wrap-content-type-if-not-set
+  [handler content-type]
   (fn [request]
-    (let [response (handler request)]
-      (assoc-in response [:headers "Content-Type"] "application/json"))))
+    (let [response (handler request)
+          content-type (:headers "Content-Type")]
+      (if content-type
+        response
+        (assoc-in response [:headers "Content-Type"] content-type)))))
 
 (defn allow-cross-origin
   "middleware function to allow cross origin"
@@ -41,7 +44,7 @@
     (-> (wrap-defaults #'routes mazeboard-defaults)
         (wrap-keyword-params)
         (wrap-json-params)
-        (wrap-default-headers)
+        (wrap-content-type-if-not-set "application/json")
         (wrap-access-rules access-options)
         (wrap-authorization auth-backend)
         (allow-cross-origin)

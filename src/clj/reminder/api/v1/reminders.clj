@@ -1,4 +1,4 @@
-(ns reminder.api.reminders
+(ns reminder.api.reminders.v1
   (:require
    [reminder.commands.reminders :as commands]
    [reminder.commands.dispatcher :as dispatcher]
@@ -11,26 +11,26 @@
   (:id (:route-params req)))
 
 (defn received-by-user [req]
-  (success "[]"))
+  (success {}))
 
 (defn sent-by-user [req]
-  (success "[]"))
+  (success {}))
 
 (defn create [req]
   (let [result (reminder-dispatcher
                 (commands/create "usera" "reminder!" ["userb"]))]
     (if (= :created (:result result))
-      (success :created)
-      (success (:error result)))))
+      (success {:status 201 :headers {"Location" ""}})
+      (success {:status 400 :body (:error result)}))))
 
 (defn details [req]
-  (success "[]"))
+  (success {}))
 
 (defn accept [req]
-  (success "[]"))
+  (success {}))
 
 (defn decline [req]
-  (success "[]"))
+  (success {}))
 
 (defn close [req]
   (let [paylad (:json req)
@@ -42,4 +42,4 @@
       (success (:error result)))))
 
 (defn delete [req]
-  (success "[]"))
+  (success {}))

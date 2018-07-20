@@ -8,12 +8,12 @@
            (OPTIONS ":url{.*}" [url] "")
            (POST "/login" [] auth/login)
            (POST "/register" [] auth/register)
-           (context "/reminders" []
-                    (GET "/" [] reminders/received-by-user)
-                    (POST "/" [] reminders/create)
-                    (context "/:id" [id]
-                             (GET "/" [] reminders/details)
-                             (POST "/accept" [] reminders/accept)
-                             (POST "/decline" [] reminders/decline)
-                             (DELETE "/" [] reminders/delete)))))
-
+           (context "/v1"
+                    (context "/reminders" []
+                             (GET "" [] reminders/received-by-user)
+                             (POST "" [] reminders/create)
+                             (context "/:id" [id]
+                                      (GET "" [] reminders/details)
+                                      (DELETE "" [] reminders/delete)
+                                      (POST "/accept" [] reminders/accept)
+                                      (POST "/decline" [] reminders/decline))))))
