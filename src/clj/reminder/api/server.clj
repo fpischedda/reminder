@@ -3,6 +3,7 @@
             [reminder.config :refer [config]]
             [reminder.api.authorization :refer [rules]]
             [mount.core :refer [defstate]]
+            [bidi.ring :refer [make-handler]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -14,7 +15,7 @@
 
 (defonce server-instance (atom nil))
 
-(def mazeboard-defaults (assoc site-defaults :security {:anti-forgery false}))
+(def reminder-defaults (assoc site-defaults :security {:anti-forgery false}))
 (defn gen-auth-backend [auth-secret]
   (backends/jws {:secret auth-secret}))
 
@@ -36,9 +37,12 @@
           (assoc-in [:headers "Access-Control-Allow-Methods"] "GET,PUT,POST,PATCH,DELETE,OPTIONS")
           (assoc-in [:headers "Access-Control-Allow-Headers"] "X-Requested-With,Content-Type,Cache-Control, Authorization")))))
 
+(def handler (make-handler routes))
+
 (defn gen-app [auth-secret]
   (let [auth-backend (gen-auth-backend auth-secret)]
-    (-> (wrap-defaults #'routes mazeboard-defaults)
+    (-> handler
+        (wrap-defaults reminder-defaults)
         (wrap-keyword-params)
         (wrap-json-params)
         (wrap-default-headers)

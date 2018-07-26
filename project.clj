@@ -7,7 +7,6 @@
                  [http-kit "2.3.0"]
                  [yogthos/config "1.1.1"]
                  [mount "0.1.12"]
-                 [compojure "1.6.1"]
                  [ring "1.6.3"]
                  [ring/ring-defaults "0.3.1"]
                  [ring/ring-json "0.4.0"]

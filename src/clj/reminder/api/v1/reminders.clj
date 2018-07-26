@@ -1,9 +1,9 @@
-(ns reminder.api.reminders
+(ns reminder.api.v1.reminders
   (:require
    [reminder.commands.reminders :as commands]
    [reminder.commands.dispatcher :as dispatcher]
    [reminder.commands.handlers.reminders :as handlers]
-   [reminder.api.utils :refer [success]]))
+   [reminder.api.utils :refer [respond]]))
 
 (def reminder-dispatcher (dispatcher/create {:reminder/create 'handlers/create
                                              :reminder/close 'handlers/close}))
@@ -11,26 +11,26 @@
   (:id (:route-params req)))
 
 (defn received-by-user [req]
-  (success "[]"))
+  (respond "[]"))
 
 (defn sent-by-user [req]
-  (success "[]"))
+  (respond "[]"))
 
 (defn create [req]
   (let [result (reminder-dispatcher
                 (commands/create "usera" "reminder!" ["userb"]))]
     (if (= :created (:result result))
-      (success :created)
-      (success (:error result)))))
+      (respond :created)
+      (respond (:error result)))))
 
 (defn details [req]
-  (success "[]"))
+  (respond "[]"))
 
 (defn accept [req]
-  (success "[]"))
+  (respond "[]"))
 
 (defn decline [req]
-  (success "[]"))
+  (respond "[]"))
 
 (defn close [req]
   (let [paylad (:json req)
@@ -38,8 +38,13 @@
         result (reminder-dispatcher
                 (commands/close (reminder-id req) reason "usera"))]
     (if (= :closed (:result result))
-      (success :closed)
-      (success (:error result)))))
+      (respond :closed)
+      (respond (:error result)))))
 
 (defn delete [req]
-  (success "[]"))
+  (respond "[]"))
+
+(def routes ["" {:get {"/received" received-by-user
+                       "/sent" sent-by-user
+                       "/" {[:id ""] details}}
+                 :post {"" create}}])
