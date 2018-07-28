@@ -6,17 +6,24 @@ friendship...
 
 ## Installation
 
-Download from https://github.com/fpischedda/reminder
+Clone from https://github.com/fpischedda/reminder
 
 ## Build
 
     $ lein deps
 
-    $ lein build
+    $ lein compile :all
 
 ## Tests
 
     $ lein midje :all
+
+## Run locally
+
+    $ docker-compose up -d mongodb
+    $ lein run
+
+This starts the web server lisetning to port 8080
 
 ## License
 
