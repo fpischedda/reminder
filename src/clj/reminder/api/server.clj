@@ -1,9 +1,8 @@
 (ns reminder.api.server
-  (:require [reminder.api.routes :refer [routes]]
+  (:require [reminder.api.handlers :refer [handlers]]
             [reminder.config :refer [config]]
             [reminder.api.authorization :refer [rules]]
             [mount.core :refer [defstate]]
-            [bidi.ring :refer [make-handler]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -40,11 +39,9 @@
           (assoc-in [:headers "Access-Control-Allow-Methods"] "GET,PUT,POST,PATCH,DELETE,OPTIONS")
           (assoc-in [:headers "Access-Control-Allow-Headers"] "X-Requested-With,Content-Type,Cache-Control, Authorization")))))
 
-(def handler (make-handler routes))
-
 (defn gen-app [auth-secret]
   (let [auth-backend (gen-auth-backend auth-secret)]
-    (-> handler
+    (-> handlers
         (wrap-defaults reminder-defaults)
         (wrap-keyword-params)
         (wrap-json-params)

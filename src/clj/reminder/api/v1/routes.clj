@@ -1,4 +1,4 @@
 (ns reminder.api.v1.routes
-  (:require [reminder.api.v1.reminders :as reminders]))
+  (:require [reminder.api.v1.reminders.routes :as reminders]))
 
 (def routes ["v1/" {"reminders" [reminders/routes]}])

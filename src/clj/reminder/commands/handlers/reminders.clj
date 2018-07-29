@@ -4,6 +4,6 @@
             [reminder.utils :refer [utc-now]]))
 
 (defn create-handler [_ payload]
-  (let [{:keys [sender recipients message]} payload]
-    (reminders/create (gen-id) sender recipients message (utc-now))))
-  
+  (let [{:keys [sender recipients message]} payload
+        id (gen-id)
+        result (reminders/create id sender recipients message (utc-now))]))
