@@ -14,7 +14,7 @@
   (json-response status {:errors errors}))
 
 (defn json-success [body]
-  (response (json/encode body)))
+  (json-response 200 body))
 
 (defn created [url]
   {:status 201
@@ -28,6 +28,9 @@
 
 (defn no-content []
   {:status 204})
+
+(defn not-authenticated []
+  {:status 401})
 
 (defn not-found []
   {:status 404})

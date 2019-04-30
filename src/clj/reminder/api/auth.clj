@@ -4,10 +4,11 @@
    [buddy.sign.jwt :as jwt]
    [cheshire.core :as json]
    [reminder.config :refer [config]]
-   [reminder.data.users :as users]))
+   [reminder.data.users :as users]
+   [reminder.api.response :as response]))
 
 (defn get-token-claims [username]
-  {:username username
+  {:usr username
    :exp (time/plus (time/now) (time/seconds (:session-expiration-seconds config)))})
 
 (defn login
@@ -15,14 +16,13 @@
   (let [data (:params request)
         username (:username data)
         user-exists (users/exists username
-                                  (:password data))
-        claims (get-token-claims username)
-        token (jwt/sign claims (:auth-secret config))]
+                                  (:password data))]
     (if user-exists
-      (json/encode {:token token
-                    :username username})
-      (json/encode {:errors [{:code :user-not-found
-                              :text "user not found"}]}))))
+      (let [claims (get-token-claims username)
+            token (jwt/sign claims (:auth-secret config))]
+        (response/json-success {:token token
+                                :username username}))
+      (response/not-authenticated))))
 
 (defn register [req]
   (let [data (:params req)
@@ -34,7 +34,9 @@
         claims (get-token-claims username)
         token (jwt/sign claims (:auth-secret config))]
     (if user-id
-      (json/encode {:token token
-                    :username username})
-      (json/encode {:errors [{:code :unable-to-register
-                              :text "unable to register"}]}))))
+      (let [claims (get-token-claims username)
+            token (jwt/sign claims (:auth-secret config))]
+        (response/json-success {:token token
+                                :username username}))
+      (response/bad-request [{:code :unable-to-register
+                              :text "unable to register"}]))))
