@@ -50,4 +50,4 @@
                          "/" {[:id ""] details}}
                    :post {"" create}
                    :put {"/" {[:id "/close"] close}}
-                   :delete {"/" {[:id ""]} delete}}])
+                   :delete {"/" {[:id ""] delete}}}])
