@@ -51,8 +51,6 @@
         (allow-cross-origin)
         (wrap-authentication auth-backend))))
 
-
-
 (defn start []
   (let [{:keys [api-server auth-secret]} config]
     (println "starting api server " api-server)

@@ -1,7 +1,14 @@
 (ns reminder.api.handlers
-  (:require [bidi.ring :refer [make-handler]]
-            [reminder.api.auth :as auth]
-            [reminder.api.v1.handlers :as api_v1]))
+  (:require [compojure.api.sweet :refer :all]))
 
+(def app
+  (api
+    {:swagger
+     {:ui "/"
+      :spec "/swagger.json"
+      :data {:info {:title "Re:minder-api"
+                    :description "Re:minder Api Documentation"}
+             :tags [{:name "api", :description "Re:minder apis"}]}}}
 
-(def handlers (make-handler ["/" [api_v1/handlers]]))
+    (context "/api" []
+      :tags ["api"])))
