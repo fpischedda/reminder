@@ -11,12 +11,6 @@
 (defn reminder-id [req]
   (:id (:route-params req)))
 
-(defn received-by-user [req]
-  (respond "[]"))
-
-(defn sent-by-user [req]
-  (respond "[]"))
-
 (defn create [req]
   (let [result (reminder-dispatcher
                 (commands/create "usera" "reminder!" ["userb"]))]
@@ -26,12 +20,6 @@
       (respond {:body (:error result) :status 400}))))
 
 (defn details [req]
-  (respond "[]"))
-
-(defn accept [req]
-  (respond "[]"))
-
-(defn decline [req]
   (respond "[]"))
 
 (defn close [req]

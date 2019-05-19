@@ -1,5 +1,5 @@
-# reminder
-# Author: Francesco Pischedda <francesco@pischedda.info>
+#+STARTUP: showeverything
+#+AUTHOR: Francesco Pischedda <francesco@pischedda.info>
 
 * Introduction
 ** Project description
