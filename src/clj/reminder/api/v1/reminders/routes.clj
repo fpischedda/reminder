@@ -4,4 +4,4 @@
                        "/sent" :reminders/sent-by-user
                        "/" {[:id ""] :reminders/get}}
                  :post {"" :reminders/create}
-                 :delete {"" :reminders/delete}}])
+                 :delete {"/"  {[:id ""] :reminders/delete}}}])

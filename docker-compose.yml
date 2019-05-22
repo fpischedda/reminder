@@ -1,6 +1,8 @@
-gameserver:
-        image: clojure:lein-alpine
-mongodb:
-        image: mongo
-        ports:
-                - "27017:27017"
+version: "3"
+services:
+  appserver:
+    image: clojure:lein-alpine
+  mongodb:
+      image: mongo
+      ports:
+        - "27017:27017"
