@@ -1,36 +1,33 @@
 (ns reminder.api.v1.reminders.api
   (:require
+   [compojure.api.sweet :refer :all]
+   [ring.util.http-response :as response]
+   [schema.core :as s]
    [reminder.commands.reminders :as commands]
    [reminder.commands.dispatcher :as dispatcher]
-   [reminder.commands.handlers.reminders :as handlers]
-   [reminder.api.routes :refer [url-for]]
-   [reminder.api.response :as response]
-   [reminder.utils :refer [gen-id]]))
+   [reminder.commands.handlers.reminders :as handlers]))
 
 (def reminder-dispatcher (dispatcher/create {:reminder/create 'handlers/create
                                              :reminder/close 'handlers/close}))
 
-(defn received-by-user [req]
-  (response/no-content))
+(s/defschema ReminderCreate
+  {:name s/Str
+   (s/optional-key :description) s/Str
+   :destinations [s/Str]})
 
-(defn sent-by-user [req]
-  (response/no-content))
+(defn reminder-id [req]
+  (:id (:route-params req)))
 
 (defn create [req]
   (let [id (gen-id)
         result (reminder-dispatcher
                 (commands/create id creator message recipients))]
     (if (= :created (:result result))
-      (response/created (url-for :reminders/get :id (:id result)))
+      ;; (response/created (path-for :reminders/get :id (:id result)))
+      (response/created "test")
       (response/bad-request (:error result)))))
 
 (defn details [req]
-  (response/no-content))
-
-(defn accept [req]
-  (response/no-content))
-
-(defn decline [req]
   (response/no-content))
 
 (defn close [req]
@@ -45,9 +42,11 @@
 (defn delete [req]
   (response/no-content))
 
-(def handlers ["" {:get {"/received" received-by-user
-                         "/sent" sent-by-user
-                         "/" {[:id ""] details}}
-                   :post {"" create}
-                   :put {"/" {[:id "/close"] close}}
-                   :delete {"/" {[:id ""] delete}}}])
+(def handlers
+  (context "/reminder" []
+    :tags ["reminder"]
+    (POST "/" []
+      :body [reminder ReminderCreate]
+      :summary "create a reminder"
+      (create reminder))
+    ))

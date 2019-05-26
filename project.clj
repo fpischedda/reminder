@@ -8,9 +8,6 @@
                  [yogthos/config "1.1.1"]
                  [mount "0.1.16"]
                  [metosin/compojure-api "2.0.0-alpha30"]
-                 [ring "1.6.3"]
-                 [ring/ring-defaults "0.3.1"]
-                 [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.1.0"]
                  [buddy/buddy-hashers "1.3.0"]
                  [buddy/buddy-auth "2.1.0"]
@@ -18,10 +15,10 @@
                  [clojure.java-time "0.3.2"]
                  [danlentz/clj-uuid "0.1.7"]]
   :main ^:skip-aot reminder.core
-  :plugins [[lein-ring "0.8.11"]
+  :plugins [[lein-ring "0.10.0"]
             [lein-midje "3.2.1"]
             [org.clojure/tools.nrepl "0.2.12"]]
-  :ring {:handler reminder.api.server/app}
+  :ring {:handler reminder.api.handlers/app}
   :source-paths ["src/clj" ]
   :target-path "target/%s"
   :test-paths ["test" "test/reminder"]
