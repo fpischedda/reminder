@@ -4,12 +4,11 @@
    [reminder.commands.dispatcher :as dispatcher]
    [reminder.commands.handlers.reminders :as handlers]
    [reminder.api.routes :refer [url-for]]
-   [reminder.api.response :as response]))
+   [reminder.api.response :as response]
+   [reminder.utils :refer [gen-id]]))
 
 (def reminder-dispatcher (dispatcher/create {:reminder/create 'handlers/create
                                              :reminder/close 'handlers/close}))
-(defn reminder-id [req]
-  (:id (:route-params req)))
 
 (defn received-by-user [req]
   (response/no-content))
@@ -18,8 +17,9 @@
   (response/no-content))
 
 (defn create [req]
-  (let [result (reminder-dispatcher
-                (commands/create "usera" "reminder!" ["userb"]))]
+  (let [id (gen-id)
+        result (reminder-dispatcher
+                (commands/create id creator message recipients))]
     (if (= :created (:result result))
       (response/created (url-for :reminders/get :id (:id result)))
       (response/bad-request (:error result)))))
