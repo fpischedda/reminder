@@ -12,11 +12,10 @@
    :exp (time/plus (time/now) (time/seconds (:session-expiration-seconds config)))})
 
 (defn login
-  [request]
-  (let [data (:params request)
-        username (:username data)
+  [credentials]
+  (let [username (:username credentials)
         user-exists (users/exists username
-                                  (:password data))]
+                      (:password credentials))]
     (if user-exists
       (let [claims (get-token-claims username)
             token (jwt/sign claims (:auth-secret config))]
@@ -24,9 +23,8 @@
                       :username username}))
       (response/unauthorized))))
 
-(defn register [req]
-  (let [data (:params req)
-        username (:username data)
+(defn register [data]
+  (let [username (:username data)
         user-id (:_id (users/create
                         username
                         (:email data)
@@ -37,6 +35,6 @@
       (let [claims (get-token-claims username)
             token (jwt/sign claims (:auth-secret config))]
         (response/ok {:token token
-                    :username username}))
+                      :username username}))
       (response/bad-request [{:code :unable-to-register
                               :text "unable to register"}]))))
