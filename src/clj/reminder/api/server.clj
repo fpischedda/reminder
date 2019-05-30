@@ -1,9 +1,8 @@
 (ns reminder.api.server
   (:require [reminder.api.handlers :refer [handlers]]
             [reminder.config :refer [config]]
-            [reminder.api :as authorization]
+            [reminder.api.authorization :as authorization]
             [mount.core :refer [defstate]]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [buddy.auth.backends :as backends]
@@ -12,15 +11,12 @@
             [buddy.auth.accessrules :refer [wrap-access-rules]]
             [org.httpkit.server :refer [run-server]]))
 
-(def reminder-defaults (assoc site-defaults :security {:anti-forgery false}))
-
 (defn gen-auth-backend [auth-secret]
   (backends/jws {:secret auth-secret}))
 
 (defn gen-app [auth-secret]
   (let [auth-backend (gen-auth-backend auth-secret)]
     (-> handlers
-        (wrap-defaults reminder-defaults)
         (wrap-keyword-params)
         (wrap-json-params)
         (wrap-access-rules authorization/rules)

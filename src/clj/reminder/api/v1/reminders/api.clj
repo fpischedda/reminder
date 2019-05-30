@@ -5,7 +5,8 @@
    [schema.core :as s]
    [reminder.commands.reminders :as commands]
    [reminder.commands.dispatcher :as dispatcher]
-   [reminder.commands.handlers.reminders :as handlers]))
+   [reminder.commands.handlers.reminders :as handlers]
+   [reminder.utils :refer [gen-id]]))
 
 (def reminder-dispatcher (dispatcher/create {:reminder/create 'handlers/create
                                              :reminder/close 'handlers/close}))
@@ -20,6 +21,9 @@
 
 (defn create [req]
   (let [id (gen-id)
+        creator "usera"
+        message "message for you"
+        recipients ["peter griffin" "philip j fry"]
         result (reminder-dispatcher
                 (commands/create id creator message recipients))]
     (if (= :created (:result result))

@@ -13,7 +13,8 @@
                  [buddy/buddy-auth "2.1.0"]
                  [cheshire "5.8.0"]
                  [clojure.java-time "0.3.2"]
-                 [danlentz/clj-uuid "0.1.7"]]
+                 [danlentz/clj-uuid "0.1.7"]
+                 [ring/ring-json "0.4.0"]]
   :main ^:skip-aot reminder.core
   :plugins [[lein-ring "0.10.0"]
             [lein-midje "3.2.1"]
