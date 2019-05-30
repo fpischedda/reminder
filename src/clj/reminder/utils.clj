@@ -1,6 +1,6 @@
 (ns reminder.utils
-  (:require [java-time :as j
-             [clj-uuid :as uuid]]))
+  (:require [java-time :as j]
+            [clj-uuid :as uuid]))
 
 (defn utc-now []
   (j/instant))
