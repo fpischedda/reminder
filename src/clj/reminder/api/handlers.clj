@@ -1,10 +1,10 @@
 (ns reminder.api.handlers
   (:require [compojure.api.sweet :refer :all]))
 
-(def app
+(def handlers
   (api
     {:swagger
-     {:ui "/"
+     {:ui "/doc"
       :spec "/swagger.json"
       :data {:info {:title "Re:minder-api"
                     :description "Re:minder Api Documentation"}

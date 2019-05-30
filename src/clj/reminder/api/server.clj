@@ -13,6 +13,7 @@
             [org.httpkit.server :refer [run-server]]))
 
 (def reminder-defaults (assoc site-defaults :security {:anti-forgery false}))
+
 (defn gen-auth-backend [auth-secret]
   (backends/jws {:secret auth-secret}))
 
