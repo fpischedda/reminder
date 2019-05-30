@@ -1,7 +1,6 @@
 (ns reminder.api.server
   (:require [reminder.api.handlers :refer [handlers]]
             [reminder.config :refer [config]]
-            [reminder.api.authorization :as authorization]
             [mount.core :refer [defstate]]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -19,7 +18,6 @@
     (-> handlers
         (wrap-keyword-params)
         (wrap-json-params)
-        (wrap-access-rules authorization/rules)
         (wrap-authorization auth-backend)
         (wrap-authentication auth-backend))))
 
