@@ -16,12 +16,12 @@
       (POST "/login" []
         :return LoginResult
         :body [credentials LoginScheme]
-        :summary "Try to login providing username and password"
+        :summary "Login providing username and password"
         (auth/login credentials))
       (POST "/register" []
         :return RegisterProfileResult
         :body [profile RegisterProfileScheme]
-        :summary "Try to login providing username and password"
+        :summary "Register a new user profile"
         (auth/register profile)))
     (context "/api" []
       :tags ["api"])))
