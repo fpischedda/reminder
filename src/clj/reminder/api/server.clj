@@ -13,13 +13,18 @@
 (defn gen-auth-backend [auth-secret]
   (backends/jws {:secret auth-secret}))
 
+(defn wrap-print-request [handler]
+  (fn [request]
+    (do
+      (println request)
+      (handler request))))
+
 (defn gen-app [auth-secret]
   (let [auth-backend (gen-auth-backend auth-secret)]
     (-> handlers
-        (wrap-keyword-params)
-        (wrap-json-params)
-        (wrap-authorization auth-backend)
-        (wrap-authentication auth-backend))))
+      (wrap-print-request)
+      (wrap-authorization auth-backend)
+      (wrap-authentication auth-backend))))
 
 (defonce server-instance (atom nil))
 
