@@ -10,12 +10,10 @@
 (defn all [page page-size]
   (paged-filter database "users" page page-size {}))
 
-(defn create [username email password]
-  (mc/insert-and-return database "users" {:_id username
-                                          :email email
+(defn create [email password]
+  (mc/insert-and-return database "users" {:_id email
                                           :password (get-hash password)}))
 
-(defn exists [username password]
-  (let [user (mc/find-one-as-map database "users" {:_id username})]
+(defn exists [email password]
+  (let [user (mc/find-one-as-map database "users" {:_id email})]
     (hashers/check password (:password user))))
-

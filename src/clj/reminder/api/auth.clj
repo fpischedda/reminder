@@ -5,36 +5,35 @@
    [cheshire.core :as json]
    [ring.util.http-response :as response]
    [reminder.config :refer [config]]
-   [reminder.data.users :as users]))
+   [reminder.data.users :as users]
+   [reminder.utils :refer [datetime->str]]))
 
-(defn get-token-claims [username]
-  {:usr username
-   :exp (time/plus (time/now) (time/seconds (:session-expiration-seconds config)))})
+(defn get-token-claims [email expire-date]
+  {:usr email
+   :exp expire-date})
+
+(defn gen-token-expire-date []
+  (time/plus (time/now) (time/seconds (:session-expiration-seconds config))))
 
 (defn login
   [credentials]
-  (let [username (:username credentials)
-        user-exists (users/exists username
+  (let [email (:email credentials)
+        user-exists (users/exists email
                       (:password credentials))]
     (if user-exists
-      (let [claims (get-token-claims username)
+      (let [expire-date (gen-token-expire-date)
+            claims (get-token-claims email expire-date)
             token (jwt/sign claims (:auth-secret config))]
-        (response/ok {:token token
-                      :username username}))
+        (response/ok {:access_token token
+                      :expires (datetime->str expire-date)}))
       (response/unauthorized))))
 
 (defn register [data]
-  (let [username (:username data)
+  (let [email (:email data)
         user-id (:_id (users/create
-                        username
-                        (:email data)
-                        (:password data)))
-        claims (get-token-claims username)
-        token (jwt/sign claims (:auth-secret config))]
+                        email
+                        (:password data)))]
     (if user-id
-      (let [claims (get-token-claims username)
-            token (jwt/sign claims (:auth-secret config))]
-        (response/ok {:token token
-                      :username username}))
+      (response/ok {:resut :success})
       (response/bad-request [{:code :unable-to-register
                               :text "unable to register"}]))))

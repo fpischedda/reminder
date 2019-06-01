@@ -1,7 +1,7 @@
 (ns reminder.api.handlers
   (:require [compojure.api.sweet :refer :all]
             [reminder.api.auth :as auth]
-            [reminder.api.scheme :refer :all]))
+            [reminder.api.schema :refer :all]))
 
 (def handlers
   (api

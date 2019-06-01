@@ -3,6 +3,7 @@
 # Login user
 POST http://localhost:8080/oauth/login
 Content-Type: application/json
+
 {
 "email": "test@test.test",
 "password": "password"
@@ -13,6 +14,6 @@ POST http://localhost:8080/oauth/register
 Content-Type: application/json
 
 {
-	"email": "test@test.test",
+	"email": "test1@test.test",
 	"password": "password"
 }

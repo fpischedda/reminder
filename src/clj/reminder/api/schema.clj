@@ -1,4 +1,4 @@
-(ns reminder.api.scheme
+(ns reminder.api.schema
   (:require [schema.core :as s]))
 
 (s/defschema LoginScheme
@@ -15,4 +15,4 @@
 
 (s/defschema RegisterProfileResult
   {:result (s/enum :success :error)
-   :message s/Str})
+   (s/optional-key :message) s/Str})
