@@ -33,5 +33,5 @@
         (:email data)
         (:password data))
     (response/ok {:resut :success})
-    (response/bad-request [{:code :unable-to-register
-                            :text "unable to register"}])))
+    (response/bad-request [{:code ::register/user-exists
+                            :text "unable to register, user exists"}])))
