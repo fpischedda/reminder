@@ -25,10 +25,9 @@
                     :expires (datetime->str expire-date)}))
     (response/unauthorized)))
 
-(defn register [data]
-  (if (users/create
-        (:email data)
-        (:password data))
-    (response/ok {:resut :success})
-    (response/bad-request [{:code ::register/user-exists
+(defn register
+  [{:keys [email password]}]
+  (if (users/create email password)
+    (response/created {:resut :success})
+    (response/bad-request [{:code :register/user-exists
                             :text "unable to register, user exists"}])))
