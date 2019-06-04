@@ -16,15 +16,14 @@
   (time/plus (time/now) (time/seconds (:session-expiration-seconds config))))
 
 (defn login
-  [credentials]
-  (let [email (:email credentials)]
-    (if (users/exists email (:password credentials))
-      (let [expire-date (gen-token-expire-date)
-            claims (get-token-claims email expire-date)
-            token (jwt/sign claims (:auth-secret config))]
-        (response/ok {:access_token token
-                      :expires (datetime->str expire-date)}))
-      (response/unauthorized))))
+  [{:keys [email password]}]
+  (if (users/exists email password)
+    (let [expire-date (gen-token-expire-date)
+          claims (get-token-claims email expire-date)
+          token (jwt/sign claims (:auth-secret config))]
+      (response/ok {:access_token token
+                    :expires (datetime->str expire-date)}))
+    (response/unauthorized)))
 
 (defn register [data]
   (if (users/create
