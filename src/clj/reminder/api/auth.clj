@@ -29,11 +29,9 @@
       (response/unauthorized))))
 
 (defn register [data]
-  (let [email (:email data)
-        user-id (:_id (users/create
-                        email
-                        (:password data)))]
-    (if user-id
-      (response/ok {:resut :success})
-      (response/bad-request [{:code :unable-to-register
-                              :text "unable to register"}]))))
+  (if (users/create
+        (:email data)
+        (:password data))
+    (response/ok {:resut :success})
+    (response/bad-request [{:code :unable-to-register
+                            :text "unable to register"}])))
