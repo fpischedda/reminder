@@ -17,10 +17,8 @@
 
 (defn login
   [credentials]
-  (let [email (:email credentials)
-        user-exists (users/exists email
-                      (:password credentials))]
-    (if user-exists
+  (let [email (:email credentials)]
+    (if (users/exists email (:password credentials))
       (let [expire-date (gen-token-expire-date)
             claims (get-token-claims email expire-date)
             token (jwt/sign claims (:auth-secret config))]
