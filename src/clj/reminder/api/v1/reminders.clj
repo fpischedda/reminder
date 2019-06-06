@@ -1,4 +1,4 @@
-(ns reminder.api.v1.reminders.api
+(ns reminder.api.v1.reminders
   (:require
    [compojure.api.sweet :refer :all]
    [ring.util.http-response :as response]
