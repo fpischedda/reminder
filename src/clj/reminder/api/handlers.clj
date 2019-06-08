@@ -1,6 +1,7 @@
 (ns reminder.api.handlers
   (:require [compojure.api.sweet :refer :all]
             [reminder.api.auth :as auth]
+            [reminder.api.v1.reminders :as reminders]
             [reminder.api.schema :refer :all]))
 
 (def handlers
@@ -15,13 +16,18 @@
       :tags ["oauth"]
       (POST "/login" []
         :return LoginResult
-        :body [credentials LoginScheme]
+        :body [credentials LoginSchema]
         :summary "Login providing username and password"
         (auth/login credentials))
       (POST "/register" []
         :return RegisterProfileResult
-        :body [profile RegisterProfileScheme]
+        :body [profile RegisterProfileSchema]
         :summary "Register a new user profile"
         (auth/register profile)))
     (context "/api" []
-      :tags ["api"])))
+      :tags ["api"]
+      (POST "/reminder" []
+        :return ReminderCreateResult
+        :body [reminder ReminderCreateSchema]
+        :summary "Creater a new reminder"
+        (reminders/create reminder)))))

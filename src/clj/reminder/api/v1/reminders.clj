@@ -11,11 +11,6 @@
 (def reminder-dispatcher (dispatcher/create {:reminder/create 'handlers/create
                                              :reminder/close 'handlers/close}))
 
-(s/defschema ReminderCreate
-  {:name s/Str
-   (s/optional-key :description) s/Str
-   :destinations [s/Str]})
-
 (defn reminder-id [req]
   (:id (:route-params req)))
 
