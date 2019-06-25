@@ -61,7 +61,7 @@
 
 *** Comment a reminder
 
- As a Reminder Recipient or LoggedIn Reminder Owner I want to add comment to
+ As a Reminder Recipient or LoggedIn Reminder Owner I want to add comments to
  the Reminder; this may be done because I need more information to complete
  what have been asked in the Reminder or maybe because the work cannot be
  completed, or other reasons.
@@ -76,3 +76,15 @@
 
   - auth
   - reminders
+
+** Reminder entities
+
+*** User
+  - email: string, unique, the user's email
+  - contact_name: string, optional, a non unique way to refer to a user
+  - password: string, stored as an hash of the user provided password
+
+*** Reminder
+  - message: string
+  - list of recipients: list of strings
+  - frequency: how often the reminder should be sent, in seconds
