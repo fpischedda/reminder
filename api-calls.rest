@@ -1,0 +1,19 @@
+# Test calls for reminder APIs
+
+# Login user
+POST http://localhost:8080/oauth/login
+Content-Type: application/json
+
+{
+"email": "test@test.test",
+"password": "password"
+}
+
+# Register a new user profile
+POST http://localhost:8080/oauth/register
+Content-Type: application/json
+
+{
+	"email": "test1@test.test",
+	"password": "password"
+}

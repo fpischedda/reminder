@@ -1,8 +1,9 @@
 (ns reminder.commands.reminders)
 
-(defn create [sender message recipients]
+(defn create [reminder-id sender message recipients]
   {:command :reminder/create
-   :payload {:sender sender
+   :payload {:reminder-id reminder-id
+             :sender sender
              :recipients recipients
              :message message}})
 
@@ -11,4 +12,3 @@
    :payload {:reminder-id reminder-id
              :reason reason
              :actor actor}})
-

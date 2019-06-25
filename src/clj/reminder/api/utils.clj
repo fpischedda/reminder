@@ -1,7 +1,4 @@
-(ns reminder.api.utils
-  (:require [bidi.bidi :as bidi]))
+(ns reminder.api.utils)
 
-(defn respond [body]
-  {:status 200
-   :headers {"Content-Type" "application/json"}
-   :body "[]"})
+(defn id-from-request [req]
+  (get-in req [:route-params :is]))
