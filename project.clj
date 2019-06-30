@@ -11,6 +11,7 @@
                  [com.novemberain/monger "3.1.0"]
                  [buddy/buddy-hashers "1.4.0"]
                  [buddy/buddy-auth "2.2.0"]
+                 [buddy/buddy-sign "3.1.0"]
                  [cheshire "5.8.0"]
                  [clojure.java-time "0.3.2"]
                  [danlentz/clj-uuid "0.1.7"]
