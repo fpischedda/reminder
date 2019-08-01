@@ -2,7 +2,7 @@
   (:require
    [compojure.api.sweet :refer :all]
    [ring.util.http-response :as response]
-   [schema.core :as s]
+   [reminder.api.schema :as api-schema]
    [reminder.commands.reminders :as commands]
    [reminder.commands.dispatcher :as dispatcher]
    [reminder.commands.handlers.reminders :as handlers]
@@ -45,7 +45,7 @@
   (context "/reminder" []
     :tags ["reminder"]
     (POST "/" []
-      :body [reminder ReminderCreate]
+      :body [reminder api-schema/ReminderCreateSchema]
       :summary "create a reminder"
       (create reminder))
     ))
